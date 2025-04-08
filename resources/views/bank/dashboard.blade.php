@@ -64,7 +64,10 @@
 
             {{-- Tabel Request Transaksi --}}
             <div class="w-full lg:w-2/3 bg-gray-100 rounded-lg shadow-lg p-6">
-                <h2 class="text-xl font-semibold mb-4">Request Transaksi</h2>
+                <div class="flex justify-between mb-2">
+                    <h2 class="text-xl font-semibold">Request Transaksi</h2>
+                    <a href="{{ route('bank.Createuser') }}" class="p-2 bg-green-400 hover:bg-green-600 rounded">Tambah user</a>
+                </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-300">
                         <thead class="bg-gray-200 text-gray-700">
@@ -137,6 +140,38 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+
+        {{-- tabel client --}}
+        <div class="overflow-x-auto">
+            <table class="min-w-full">
+                <thead class="bg-gray-200 text-gray-700">
+                    <tr>
+                        <th class="px-4 py-2 text-left">User</th>
+                        <th class="px-4 py-2 text-left">No. Rek</th>
+                        <th class="px-4 py-2 text-left">Terbuat</th>
+                        {{-- <th class="px-4 py-2 text-center">Aksi</th> --}}
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-300">
+                    @foreach ($clients as $client)
+                        <tr>
+                            <td class="px-4 py-2">{{ $client->name }}</td>
+                            <td class="px-4 py-2">{{ $client->wallet->wallet_number ?? '-'}}</td>
+                            <td class="px-4 py-2">{{ $client->created_at->format('d M Y') }}</td>
+                            {{-- <td class="px-4 py-2 flex justify-center items-center">
+                                <a href="{{  route('admin.Edituser', $user)  }}" class="bg-blue-800 text-white p-2 rounded">Edit</a>
+
+                                <form action="{{ route('admin.deleteuser', $user->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="ml-2 bg-red-800 text-white p-2 rounded">Delete</button>
+                                </form>
+                            </td> --}}
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 @endsection

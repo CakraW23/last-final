@@ -5,7 +5,7 @@
     <div class="w-full bg-gray-100 rounded-lg shadow-lg p-6 mb-4">
     <div class="flex justify-between mb-4">
         <h2 class="text-xl font-semibold p-2">Data User</h2>
-        <a href="{{ route('adminCreateuser') }}" class="bg-green-800 text-white p-2 rounded">Create User</a>
+        <a href="{{ route('admin.Createuser') }}" class="bg-green-800 text-white p-2 rounded">Create User</a>
     </div>
         <div class="overflow-x-auto">
             <table class="min-w-full">
@@ -26,7 +26,7 @@
                             <td class="px-4 py-2">{{ $user->wallet->wallet_number ?? '-'}}</td>
                             <td class="px-4 py-2">{{ $user->created_at->format('d M Y') }}</td>
                             <td class="px-4 py-2 flex justify-center items-center">
-                                <a href="{{  route('adminEdituser', $user)  }}" class="bg-blue-800 text-white p-2 rounded">Edit</a>
+                                <a href="{{  route('admin.Edituser', $user)  }}" class="bg-blue-800 text-white p-2 rounded">Edit</a>
 
                                 <form action="{{ route('admin.deleteuser', $user->id) }}" method="POST">
                                     @csrf

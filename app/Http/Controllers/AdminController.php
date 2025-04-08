@@ -30,7 +30,7 @@ class AdminController extends Controller
             'password' => 'required|min:8',
             'role_id' => 'required|exists:roles,id'
         ]);
-
+        
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,

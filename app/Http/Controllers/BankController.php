@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\Transaction;
+use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
 
@@ -10,10 +12,42 @@ class BankController extends Controller
 {
     public function index()
     {
+        $clients = User::where('role_id', 3)->get();
         $transactions = Transaction::whereIn('type', ['topup', 'withdraw'])->where('status', 'pending')->get();
         $histories = Transaction::whereIn('status', ['success', 'rejected'])->get();
         // dd($history);
-        return view('bank.dashboard', compact('transactions', 'histories'));
+        return view('bank.dashboard', compact('clients', 'transactions', 'histories'));
+    }
+
+    public function createPage()
+    {
+        $roles = Role::all();
+        return view('bank.createuser', compact('roles'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8',
+            'role_id' => 'required|exists:roles,id'
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'role_id' => $request->role_id
+        ]);
+
+        Wallet::create([
+            'user_id' => $user->id,
+            'balance' => 0,
+            'wallet_number' => fake()->unique()->numerify('#########')
+        ]);
+
+        return back()->with('success_user', 'Berhasil Menambah User');
     }
 
     public function topup(Request $request)

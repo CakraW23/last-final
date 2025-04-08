@@ -31,6 +31,9 @@ Route::middleware(['auth', 'verified', 'role:client'])->group(function () {
 Route::middleware(['auth', 'verified', 'role:bank'])->prefix('bank')->name('bank.')->group(function () {
     Route::get('/dashboard', [BankController::class, 'index'])->name('dashboard');
 
+    Route::get('/createuser', [BankController::class, 'createPage'])->name('Createuser');
+    Route::post('/createuser', [BankController::class, 'store'])->name('createuser');
+
     Route::put('/approve/{id}', [BankController::class, 'approve'])->name('approve');
     Route::put('/reject/{id}', [BankController::class, 'reject'])->name('reject');
     Route::post('/topup', [BankController::class, 'topup'])->name('topup');
